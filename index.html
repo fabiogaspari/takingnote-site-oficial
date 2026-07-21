@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TakingNote · Aprenda e Crie com IA</title>
+  <!-- PrimeIcons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/primeicons@7.0.0/primeicons.css" />
+  <style>
+    /* Reset e base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #ffffff;
+      color: #1e293b;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1a3a2a, #2d5a3d, #1e4a6e);
+      color: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      padding: 2.5rem 1.5rem;
+    }
+
+    .hero-glow-1 {
+      position: absolute;
+      top: -6rem;
+      left: -6rem;
+      width: 18rem;
+      height: 18rem;
+      background: rgba(52, 211, 153, 0.1);
+      border-radius: 9999px;
+      filter: blur(80px);
+    }
+
+    .hero-glow-2 {
+      position: absolute;
+      bottom: -8rem;
+      right: -5rem;
+      width: 24rem;
+      height: 24rem;
+      background: rgba(34, 211, 238, 0.1);
+      border-radius: 9999px;
+      filter: blur(80px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 80rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      background: rgba(251, 191, 36, 0.2);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+      color: #fcd34d;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-top: 2rem;
+      max-width: 64rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-title .highlight-amber {
+      color: #fcd34d;
+    }
+
+    .hero-title .highlight-cyan {
+      color: #67e8f9;
+    }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      margin-top: 2rem;
+      max-width: 64rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 2.25rem;
+      font-weight: 500;
+      color: #a7f3d0;
+    }
+
+    .hero-sub-2 {
+      font-size: 1.125rem;
+      margin-top: 1.25rem;
+      max-width: 64rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 2.25rem;
+      font-weight: 500;
+      color: #93c5fd;
+    }
+
+    .hero-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .hero-card {
+      background: rgba(251, 191, 36, 0.1);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: left;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transition: all 0.3s;
+    }
+
+    .hero-card:hover {
+      background: rgba(251, 191, 36, 0.2);
+      border-color: rgba(251, 191, 36, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .hero-card-icon {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+      background: rgba(251, 191, 36, 0.2);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-card-icon i {
+      font-size: 1.875rem;
+      color: #fcd34d;
+    }
+
+    .hero-card h3 {
+      font-size: 1.875rem;
+      font-weight: 900;
+      margin-top: 1.5rem;
+      color: white;
+    }
+
+    .hero-card p {
+      margin-top: 1.25rem;
+      font-size: 1.125rem;
+      line-height: 2rem;
+      font-weight: 500;
+      color: #d1fae5;
+    }
+
+    .hero-card-green {
+      background: rgba(16, 185, 129, 0.25);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .hero-card-green:hover {
+      background: rgba(16, 185, 129, 0.35);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+
+    .hero-card-green .hero-card-icon {
+      background: rgba(34, 211, 238, 0.2);
+      border-color: rgba(34, 211, 238, 0.2);
+    }
+
+    .hero-card-green .hero-card-icon i {
+      color: #e9d5ff;
+    }
+
+    /* ===== MIDDLE ===== */
+    .middle {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      margin-top: 2rem;
+      border-radius: 1.5rem;
+      background: linear-gradient(to right, #1a2f1a, #2d4a2d, #2563eb);
+      color: white;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .middle-glow-1 {
+      position: absolute;
+      top: -5rem;
+      left: -5rem;
+      width: 16rem;
+      height: 16rem;
+      background: rgba(251, 191, 36, 0.1);
+      border-radius: 9999px;
+      filter: blur(80px);
+    }
+
+    .middle-glow-2 {
+      position: absolute;
+      bottom: -5rem;
+      right: -5rem;
+      width: 18rem;
+      height: 18rem;
+      background: rgba(34, 211, 238, 0.1);
+      border-radius: 9999px;
+      filter: blur(80px);
+    }
+
+    .middle-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .middle-icon {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 1.5rem;
+      background: rgba(251, 191, 36, 0.15);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .middle-icon i {
+      font-size: 2.5rem;
+      color: #fcd34d;
+    }
+
+    .middle h2 {
+      margin-top: 1.5rem;
+      font-size: 1.875rem;
+      font-weight: 900;
+      letter-spacing: 0.025em;
+    }
+
+    .middle p {
+      margin-top: 1.5rem;
+      max-width: 64rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 2.25rem;
+      color: rgba(209, 250, 229, 0.95);
+    }
+
+    .middle p.blue {
+      color: rgba(147, 197, 253, 0.9);
+    }
+
+    .middle-badges {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .middle-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      background: rgba(251, 191, 36, 0.2);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+    }
+
+    .middle-badge.green {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .middle-badge.cyan {
+      background: rgba(34, 211, 238, 0.2);
+      border-color: rgba(34, 211, 238, 0.2);
+    }
+
+    /* ===== CARDS ===== */
+    .cards-section {
+      margin-top: 3rem;
+      padding: 0 1rem;
+    }
+
+    .cards-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cards-header .title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      background: linear-gradient(to right, #f59e0b, #059669);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cards-header .sub {
+      color: #64748b;
+      font-size: 1.125rem;
+      margin-top: 1rem;
+      max-width: 56rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 2rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      padding: 0.5rem;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-content {
+      padding: 0.5rem;
+    }
+
+    .card-icon-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-icon {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-icon i {
+      font-size: 1.875rem;
+    }
+
+    .card-icon.amber {
+      background: #fffbeb;
+    }
+    .card-icon.amber i {
+      color: #b45309;
+    }
+    .card-icon.emerald {
+      background: #ecfdf5;
+    }
+    .card-icon.emerald i {
+      color: #047857;
+    }
+    .card-icon.cyan {
+      background: #ecfeff;
+    }
+    .card-icon.cyan i {
+      color: #0891b2;
+    }
+    .card-icon.orange {
+      background: #fff7ed;
+    }
+    .card-icon.orange i {
+      color: #f97316;
+    }
+    .card-icon.purple {
+      background: #faf5ff;
+    }
+    .card-icon.purple i {
+      color: #7c3aed;
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      color: #1e293b;
+      margin-top: 1.5rem;
+    }
+
+    .card p {
+      color: #64748b;
+      line-height: 1.75rem;
+      margin-top: 1rem;
+      text-align: left;
+      letter-spacing: 0.025em;
+    }
+
+    .card .tag {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card .tag.amber {
+      color: #b45309;
+    }
+    .card .tag.emerald {
+      color: #047857;
+    }
+    .card .tag.cyan {
+      color: #0891b2;
+    }
+    .card .tag.orange {
+      color: #f97316;
+    }
+    .card .tag.purple {
+      color: #7c3aed;
+    }
+
+    .min-h-30 {
+      min-height: 7.5rem;
+    }
+    .min-h-35 {
+      min-height: 8.75rem;
+    }
+    .h-42 {
+      min-height: 10.5rem;
+    }
+
+    /* ===== BADGES ROW ===== */
+    .badges-row {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .badge-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 1rem;
+      font-weight: 600;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .badge-item.amber {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      color: #92400e;
+    }
+    .badge-item.emerald {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      color: #065f46;
+    }
+    .badge-item.cyan {
+      background: #ecfeff;
+      border: 1px solid #67e8f9;
+      color: #0e7490;
+    }
+    .badge-item.orange {
+      background: #fff7ed;
+      border: 1px solid #fdba74;
+      color: #9a3412;
+    }
+
+    /* ===== PRODUCT SECTION ===== */
+    .products-section {
+      margin-top: 3.5rem;
+      padding: 0 1rem;
+    }
+
+    .products-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .products-header .title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      background: linear-gradient(to right, #f59e0b, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .products-header .sub {
+      color: #64748b;
+      font-size: 1.125rem;
+      margin-top: 1rem;
+      max-width: 56rem;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 2rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      max-width: 64rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .product-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transition: all 0.5s;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: block;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+
+    .product-card.langs {
+      background: linear-gradient(135deg, #1a3a2a, #2d5a3d);
+    }
+
+    .product-card.genius {
+      background: linear-gradient(135deg, #1a2f5a, #2563eb);
+    }
+
+    .product-card .glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      transition: all 0.5s;
+    }
+
+    .product-card.langs .glow {
+      top: -5rem;
+      right: -5rem;
+      width: 16rem;
+      height: 16rem;
+      background: rgba(52, 211, 153, 0.1);
+    }
+
+    .product-card.langs:hover .glow {
+      background: rgba(52, 211, 153, 0.2);
+    }
+
+    .product-card.genius .glow {
+      bottom: -5rem;
+      left: -5rem;
+      width: 16rem;
+      height: 16rem;
+      background: rgba(34, 211, 238, 0.1);
+    }
+
+    .product-card.genius:hover .glow {
+      background: rgba(34, 211, 238, 0.2);
+    }
+
+    .product-card .content {
+      position: relative;
+      z-index: 10;
+    }
+
+    .product-card .icon-wrap {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover .icon-wrap {
+      transform: scale(1.1);
+    }
+
+    .product-card.langs .icon-wrap {
+      background: rgba(52, 211, 153, 0.2);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .product-card.genius .icon-wrap {
+      background: rgba(34, 211, 238, 0.2);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+    }
+
+    .product-card .icon-wrap i {
+      font-size: 2.5rem;
+    }
+
+    .product-card.langs .icon-wrap i {
+      color: #a7f3d0;
+    }
+
+    .product-card.genius .icon-wrap i {
+      color: #67e8f9;
+    }
+
+    .product-card .name {
+      font-size: 2.25rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card.langs .name {
+      background: linear-gradient(to right, #a7f3d0, #fcd34d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .product-card.genius .name {
+      background: linear-gradient(to right, #67e8f9, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .product-card .subtitle {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .product-card.langs .subtitle {
+      color: rgba(167, 243, 208, 0.8);
+    }
+
+    .product-card.genius .subtitle {
+      color: rgba(103, 232, 249, 0.8);
+    }
+
+    .product-card .description {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+
+    .product-card.langs .description {
+      color: rgba(209, 250, 229, 0.9);
+    }
+
+    .product-card.genius .description {
+      color: rgba(219, 234, 254, 0.9);
+    }
+
+    .product-card .tags {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .product-card .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .product-card.langs .tag {
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    .product-card.langs .tag i {
+      color: #6ee7b7;
+    }
+
+    .product-card.genius .tag {
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+    }
+
+    .product-card.genius .tag i {
+      color: #67e8f9;
+    }
+
+    .product-card .cta {
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .product-card:hover .cta {
+      gap: 1.25rem;
+    }
+
+    .product-card.langs .cta {
+      color: #a7f3d0;
+    }
+
+    .product-card.genius .cta {
+      color: #67e8f9;
+    }
+
+    .product-card .cta i {
+      font-size: 1.25rem;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover .cta i {
+      transform: translateX(8px);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 4rem;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.875rem;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 2rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 3.75rem;
+      }
+
+      .hero-cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .hero-sub,
+      .hero-sub-2 {
+        font-size: 1.5rem;
+      }
+
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .middle h2 {
+        font-size: 2.25rem;
+      }
+
+      .cards-header .title,
+      .products-header .title {
+        font-size: 3rem;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .cards-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero-glow-1"></div>
+      <div class="hero-glow-2"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="pi pi-sparkles"></i>
+          Aprenda &amp; Crie com Inteligência Artificial
+        </div>
+
+        <h1 class="hero-title">
+          Domine idiomas e <br class="hidden sm:block" />
+          <span class="highlight-amber">crie cursos completos</span>
+          <span class="highlight-cyan"> com IA em minutos</span>
+        </h1>
+
+        <p class="hero-sub">
+          Aprenda inglês, espanhol, francês e muito mais com assistente pessoal de IA.
+          Ou transforme qualquer assunto em um curso completo com materiais, questões e certificados.
+        </p>
+        <p class="hero-sub-2">
+          Leitura, escrita, conversação, imersão cultural — e também criação de conteúdo, monetização e privacidade.
+        </p>
+
+        <div class="hero-cards">
+          <div class="hero-card">
+            <div class="hero-card-icon">
+              <i class="pi pi-comments"></i>
+            </div>
+            <h3>Conversação Natural</h3>
+            <p>Pratique diálogos reais com IA que simula nativos e corrige pronúncia e gramática.</p>
+          </div>
+
+          <div class="hero-card hero-card-green">
+            <div class="hero-card-icon">
+              <i class="pi pi-sparkles"></i>
+            </div>
+            <h3>Cursos por IA</h3>
+            <p>Descreva o que deseja aprender e a IA cria um curso completo com materiais e trilha.</p>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-card-icon">
+              <i class="pi pi-certificate"></i>
+            </div>
+            <h3>Certificação &amp; Monetização</h3>
+            <p>Prepare-se para exames internacionais e compartilhe seu código para ganhar comissões.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MIDDLE ===== -->
+    <section class="middle">
+      <div class="middle-glow-1"></div>
+      <div class="middle-glow-2"></div>
+
+      <div class="middle-content">
+        <div class="middle-icon">
+          <i class="pi pi-globe"></i>
+        </div>
+        <h2>Fluência em qualquer idioma · Aprenda qualquer coisa</h2>
+        <p>
+          Seja para viagens, negócios, estudos ou realização pessoal. Nossa IA adapta o conteúdo ao seu objetivo e nível.
+          Também cria cursos sob demanda para programação, concursos, música, marketing e muito mais.
+        </p>
+        <p class="blue">
+          Pratique leitura, escrita, compreensão auditiva e conversação — ou crie conteúdo, compartilhe com a comunidade
+          e monetize.
+        </p>
+
+        <div class="middle-badges">
+          <span class="middle-badge">IA Adaptativa</span>
+          <span class="middle-badge green">Correções em Tempo Real</span>
+          <span class="middle-badge cyan">Cursos Completos</span>
+          <span class="middle-badge">Certificados Válidos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 4 HABILIDADES ===== -->
+    <section class="cards-section">
+      <div class="cards-header">
+        <span class="title">Domine as 4 Habilidades</span>
+        <p class="sub">Leitura, escrita, compreensão auditiva e conversação. Desenvolvimento completo em um só lugar.</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon amber"><i class="pi pi-eye"></i></div>
+            </div>
+            <h3>Leitura</h3>
+            <p>Textos autênticos e adaptados ao seu nível com vocabulário contextualizado e exercícios.</p>
+            <div class="tag amber"><i class="pi pi-check-circle"></i><span>Compreensão textual</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon amber"><i class="pi pi-pencil"></i></div>
+            </div>
+            <h3>Escrita</h3>
+            <p>Produza textos com correção gramatical e ortográfica inteligente. IA sugere melhorias.</p>
+            <div class="tag amber"><i class="pi pi-bolt"></i><span>Correção automática</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon amber"><i class="pi pi-headphones"></i></div>
+            </div>
+            <h3>Compreensão</h3>
+            <p>Áudios com diferentes sotaques e velocidades. Exercícios de escuta ativa.</p>
+            <div class="tag amber"><i class="pi pi-sync"></i><span>Imersão sonora</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon emerald"><i class="pi pi-microphone"></i></div>
+            </div>
+            <h3>Conversação</h3>
+            <p>Diálogos interativos com IA que avalia pronúncia, fluência e fornece feedback.</p>
+            <div class="tag emerald"><i class="pi pi-star-fill"></i><span>Fluência prática</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BADGES ROW ===== -->
+    <div class="badges-row">
+      <div class="badge-item amber"><i class="pi pi-sparkles"></i> IA Especializada em Idiomas</div>
+      <div class="badge-item emerald"><i class="pi pi-chart-line"></i> Prática Ilimitada</div>
+      <div class="badge-item cyan"><i class="pi pi-verified"></i> Certificados por Nível</div>
+      <div class="badge-item orange"><i class="pi pi-wallet"></i> Monetização</div>
+    </div>
+
+    <!-- ===== RECURSOS EXCLUSIVOS ===== -->
+    <section class="cards-section">
+      <div class="cards-header">
+        <span class="title" style="background: linear-gradient(to right, #f59e0b, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Recursos Exclusivos</span>
+        <p class="sub">Ferramentas avançadas para acelerar seu aprendizado e criação de conteúdo.</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon amber"><i class="pi pi-sparkles"></i></div>
+            </div>
+            <h3>Conversação</h3>
+            <p class="min-h-30">Pratique conversação com IA adaptativa, simulando situações reais.</p>
+            <div class="tag amber"><i class="pi pi-bolt"></i><span>Feedback instantâneo</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon amber"><i class="pi pi-database"></i></div>
+            </div>
+            <h3>Autêntico</h3>
+            <p class="min-h-30">Material pensado especificamente no assunto e nível que você deseja.</p>
+            <div class="tag amber"><i class="pi pi-share-alt"></i><span>Imersão cultural</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon emerald"><i class="pi pi-chart-bar"></i></div>
+            </div>
+            <h3>Evolução</h3>
+            <p class="min-h-30">Acompanhe progresso com métricas detalhadas. IA ajusta o conteúdo.</p>
+            <div class="tag emerald"><i class="pi pi-money-bill"></i><span>Resultados reais</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon amber"><i class="pi pi-users"></i></div>
+            </div>
+            <h3>Atualizações</h3>
+            <p class="min-h-30">Cursos sempre em atualização, trazendo novos conteúdos exclusivos.</p>
+            <div class="tag amber"><i class="pi pi-eye"></i><span>Aprendizado social</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PARA QUEM QUER APRENDER ===== -->
+    <section class="cards-section">
+      <div class="cards-header">
+        <span class="title" style="background: linear-gradient(to right, #06b6d4, #2563eb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Para Quem Quer Aprender</span>
+        <p class="sub">Plataforma criada para acelerar o aprendizado com IA, prática e materiais personalizados.</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon cyan"><i class="pi pi-refresh"></i></div>
+            </div>
+            <h3>Demanda</h3>
+            <p class="h-42">Crie cursos sobre qualquer assunto e receba uma trilha de aprendizado estruturada.</p>
+            <div class="tag cyan"><i class="pi pi-check-circle"></i><span>Foco no importante</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon orange"><i class="pi pi-question-circle"></i></div>
+            </div>
+            <h3>Questões</h3>
+            <p class="h-42">Pratique com exercícios gerados por IA e receba feedbacks imediatos.</p>
+            <div class="tag orange"><i class="pi pi-bolt"></i><span>Maior retenção</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon purple"><i class="pi pi-book"></i></div>
+            </div>
+            <h3>Materiais</h3>
+            <p class="h-42">Explicações detalhadas, resumos, exemplos práticos e conteúdos aprofundados.</p>
+            <div class="tag purple"><i class="pi pi-sync"></i><span>Compreensão real</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon emerald"><i class="pi pi-verified"></i></div>
+            </div>
+            <h3>Certificados</h3>
+            <p class="h-42">Obtenha certificados do seu aprendizado e se torne um especialista.</p>
+            <div class="tag emerald"><i class="pi pi-star-fill"></i><span>Conhecimento validado</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PARA CRIADORES ===== -->
+    <section class="cards-section">
+      <div class="cards-header">
+        <span class="title" style="background: linear-gradient(to right, #059669, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Para Criadores de Conteúdo</span>
+        <p class="sub">Crie cursos completos com IA, publique, mantenha privacidade e monetize sua audiência.</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon cyan"><i class="pi pi-sparkles"></i></div>
+            </div>
+            <h3>IA</h3>
+            <p class="h-42">Gera materiais, exercícios, itens para simulados e certificações automaticamente.</p>
+            <div class="tag cyan"><i class="pi pi-bolt"></i><span>Mais produtividade</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon orange"><i class="pi pi-comments"></i></div>
+            </div>
+            <h3>Compartilhar</h3>
+            <p class="h-42">Cursos disponíveis para a comunidade, permitindo que outras pessoas aprendam.</p>
+            <div class="tag orange"><i class="pi pi-share-alt"></i><span>Sabedoria</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon emerald"><i class="pi pi-wallet"></i></div>
+            </div>
+            <h3>Monetização</h3>
+            <p class="h-42">Receba participação nas assinaturas dos usuários que utilizarem seu código.</p>
+            <div class="tag emerald"><i class="pi pi-money-bill"></i><span>Financeiro</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-content">
+            <div class="card-icon-wrap">
+              <div class="card-icon purple"><i class="pi pi-angle-double-up"></i></div>
+            </div>
+            <h3>Personalização</h3>
+            <p class="h-42">Enriqueça seus cursos com vídeos, PDFs, imagens e links para atrair estudantes.</p>
+            <div class="tag purple"><i class="pi pi-eye"></i><span>Curso especialista</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SEÇÃO DE PRODUTOS (LINKs) ===== -->
+    <section class="products-section">
+      <div class="products-header">
+        <span class="title">Escolha Seu Produto</span>
+        <p class="sub">Duas plataformas poderosas para acelerar seu aprendizado e criação de conteúdo com IA.</p>
+      </div>
+
+      <div class="products-grid">
+        <!-- Langs -->
+        <a href="https://langs.takingnote.com.br" target="_blank" class="product-card langs">
+          <div class="glow"></div>
+          <div class="content">
+            <div class="icon-wrap">
+              <i class="pi pi-comments"></i>
+            </div>
+            <div class="name">Langs</div>
+            <div class="subtitle">Aprenda Idiomas com IA</div>
+            <p class="description">
+              Domine inglês, espanhol, francês e muito mais com assistente pessoal de IA que se adapta ao seu nível e ritmo de aprendizado.
+            </p>
+            <div class="tags">
+              <span class="tag"><i class="pi pi-check-circle"></i> Conversação</span>
+              <span class="tag"><i class="pi pi-check-circle"></i> Leitura &amp; Escrita</span>
+              <span class="tag"><i class="pi pi-check-circle"></i> Privacidade</span>
+            </div>
+            <div class="cta">
+              <span>Acessar Plataforma</span>
+              <i class="pi pi-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+
+        <!-- Genius -->
+        <a href="https://genius.takingnote.com.br" target="_blank" class="product-card genius">
+          <div class="glow"></div>
+          <div class="content">
+            <div class="icon-wrap">
+              <i class="pi pi-sparkles"></i>
+            </div>
+            <div class="name">Genius</div>
+            <div class="subtitle">Crie Cursos com IA</div>
+            <p class="description">
+              Transforme qualquer assunto em um curso completo em minutos. Basta informar o tema e a IA cria materiais, questões e trilhas de estudo.
+            </p>
+            <div class="tags">
+              <span class="tag"><i class="pi pi-check-circle"></i> Cursos Automáticos</span>
+              <span class="tag"><i class="pi pi-check-circle"></i> Monetização</span>
+              <span class="tag"><i class="pi pi-check-circle"></i> Certificação</span>
+            </div>
+            <div class="cta">
+              <span>Acessar Plataforma</span>
+              <i class="pi pi-arrow-right"></i>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      &copy; 2026 TakingNote · Aprenda e crie com inteligência artificial.
+    </footer>
+
+  </div>
+
+</body>
+
+</html>
